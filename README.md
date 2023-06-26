@@ -230,3 +230,17 @@ yarn add phosphor-react-native
 npx expo install expo-image
 ```
 
+
+[Navegação entre as páginas - React Navigation](https://reactnavigation.org/docs/getting-started)
+
+```bash
+yarn add @react-navigation/native
+npx expo install react-native-screens react-native-safe-area-context
+```
+
+
+- [Hello React Navigation](https://reactnavigation.org/docs/hello-react-navigation) para usar a estratégia de navegação stack
+```bash
+yarn add @react-navigation/native-stack
+```
+
