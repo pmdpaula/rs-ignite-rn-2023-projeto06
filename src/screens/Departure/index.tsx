@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@realm/react';
 import { Key } from 'phosphor-react-native';
-import { v4 as uuid } from 'uuid';
 
 import { useEffect, useRef, useState } from 'react';
 
@@ -35,10 +34,6 @@ export const Departure = () => {
   const licensePlateRef = useRef<TextInput>(null);
 
   const keyboardAvoidingViewBehaivor = Platform.OS === 'ios' ? 'position' : 'height';
-
-  useEffect(() => {
-    console.log('UUID gerado pelo pacote uuid ==>', uuid());
-  }, []);
 
   function handleDepartureRegister() {
     try {
