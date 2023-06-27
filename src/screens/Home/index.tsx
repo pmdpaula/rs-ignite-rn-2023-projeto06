@@ -1,10 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
+
+import { CarStatus } from '../../components/CarStatus';
 import { HomeHeader } from '../../components/HomeHeader';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 export const Home = () => {
+  const { navigate } = useNavigation();
+
+  function handleRegisterMovement() {
+    navigate('departure');
+  }
+
   return (
     <Container>
       <HomeHeader />
+
+      <Content>
+        <CarStatus
+          licensePlate={'ABC-4D123'}
+          onPress={handleRegisterMovement}
+        />
+      </Content>
     </Container>
   );
 };
