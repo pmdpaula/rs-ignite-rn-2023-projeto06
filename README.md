@@ -254,3 +254,8 @@ npx expo install react-native-screens react-native-safe-area-context
 yarn add @react-navigation/native-stack
 ```
 
+[Manipulação de datas - Dayjs](https://day.js.org/docs/en/installation/node-js)
+
+```bash
+yarn add dayjs
+```

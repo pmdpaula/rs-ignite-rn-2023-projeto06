@@ -9,6 +9,7 @@ import { StatusBar } from 'react-native';
 
 import { Loading } from './src/components/Loading';
 import { RealmProvider } from './src/lib/realm';
+import './src/libs/dayjs';
 import { Routes } from './src/routes';
 import { SignIn } from './src/screens/SignIn';
 import theme from './src/theme';
