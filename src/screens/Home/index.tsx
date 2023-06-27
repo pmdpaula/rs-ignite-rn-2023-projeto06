@@ -17,7 +17,7 @@ export const Home = () => {
 
       <Content>
         <CarStatus
-          licensePlate={'ABC-4D123'}
+          // licensePlate={'ABC-4D123'}
           onPress={handleRegisterMovement}
         />
       </Content>

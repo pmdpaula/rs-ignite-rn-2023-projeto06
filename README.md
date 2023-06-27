@@ -213,6 +213,16 @@ yarn add realm
 yarn add @realm/react
 ```
 
+Na criação dos objetos de banco pelo Realm colocamos nos IDs valores randômicos e para tal precisamos instalar uma biblioteca.
+- [react-native-get-random-values](https://github.com/LinusU/react-native-get-random-values)
+```bash
+yarn add react-native-get-random-values@1.8.0
+npx pod-install   # para iOS
+```
+
+Adicionar a linha abaixo no `App.tsx`
+`import 'react-native-get-random-values'`
+
 
 # Instalações extras
 

@@ -1,6 +1,7 @@
 import { REALM_APP_ID } from '@env';
 import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 import { AppProvider, UserProvider } from '@realm/react';
+import 'react-native-get-random-values';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
 
