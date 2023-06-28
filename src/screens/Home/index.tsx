@@ -9,6 +9,10 @@ import { Alert, FlatList } from 'react-native';
 import { CarStatus } from '../../components/CarStatus';
 import { HistoricCard, HistoricCardProps } from '../../components/HistoricCard';
 import { HomeHeader } from '../../components/HomeHeader';
+import {
+  getLastSyncTimestamp,
+  saveLastSyncTimestamp,
+} from '../../libs/asyncStorage/syncStorage';
 import { useQuery, useRealm } from '../../libs/realm';
 import { Historic } from '../../libs/realm/schemas/Historic';
 import { LicensePlate } from './../../components/HistoricCard/styles';
@@ -41,15 +45,16 @@ export const Home = () => {
     }
   }
 
-  function fetchHistoric() {
+  async function fetchHistoric() {
     try {
       const response = historic.filtered("status = 'arrival' SORT(created_at DESC)");
+      const lastSync = await getLastSyncTimestamp();
 
       const formattedHistoric = response.map((item) => {
         return {
           id: item._id.toString(),
           licensePlate: item.license_plate,
-          isSync: false,
+          isSync: lastSync > item.updated_at!.getTime(),
           created: dayjs(item.created_at).format('[Saída em ] DD/MM/YYYY [às] HH:mm'),
         };
       });
@@ -65,13 +70,20 @@ export const Home = () => {
     return () => navigate('arrival', { id });
   }
 
+  async function progressNotification(transferred: number, transferrable: number) {
+    const percentage = Math.round((transferred / transferrable) * 100);
+
+    if (percentage === 100) {
+      await saveLastSyncTimestamp();
+      fetchHistoric();
+    }
+
+    console.log('🚀 ~ file: index.tsx:70 ~ Transferido: ', percentage, '%');
+  }
+
   useEffect(() => {
     fetchVehicleInUse();
   }, []);
-
-  useEffect(() => {
-    fetchHistoric();
-  }, [historic]);
 
   useEffect(() => {
     realm.addListener('change', fetchVehicleInUse);
@@ -82,6 +94,26 @@ export const Home = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const syncSession = realm.syncSession;
+
+    if (!syncSession) {
+      return;
+    }
+
+    syncSession.addProgressNotification(
+      Realm.ProgressDirection.Upload,
+      Realm.ProgressMode.ReportIndefinitely,
+      progressNotification,
+    );
+
+    return () => syncSession.removeProgressNotification(progressNotification);
+  }, []);
+
+  useEffect(() => {
+    fetchHistoric();
+  }, [historic]);
 
   useEffect(() => {
     realm.subscriptions.update((mutableSubs, realm) => {
