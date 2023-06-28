@@ -1,16 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@realm/react';
-import { Key } from 'phosphor-react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { useRef, useState } from 'react';
 
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  TextInput,
-} from 'react-native';
+import { Alert, ScrollView, TextInput } from 'react-native';
 
 import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
@@ -33,7 +27,8 @@ export const Departure = () => {
   const descriptionRef = useRef<TextInput>(null);
   const licensePlateRef = useRef<TextInput>(null);
 
-  const keyboardAvoidingViewBehaivor = Platform.OS === 'ios' ? 'position' : 'height';
+  // const keyboardAvoidingViewBehaivor = Platform.OS === 'ios' ? 'position' : 'height';
+  // removido pois usando o KeyboardAwareScrollView não é necessário
 
   function handleDepartureRegister() {
     try {
@@ -82,27 +77,9 @@ export const Departure = () => {
     <Container>
       <Header title="Saída" />
 
-      <KeyboardAvoidingView behavior={keyboardAvoidingViewBehaivor}>
+      <KeyboardAwareScrollView extraHeight={100}>
         <ScrollView>
           <Content>
-            <LicensePlateInput
-              ref={licensePlateRef}
-              label="Placa do veículo"
-              placeholder="RJ14567"
-              onSubmitEditing={() => descriptionRef.current?.focus()}
-              returnKeyType="next"
-              onChangeText={setLicensePlate}
-            />
-
-            <LicensePlateInput
-              ref={licensePlateRef}
-              label="Placa do veículo"
-              placeholder="RJ14567"
-              onSubmitEditing={() => descriptionRef.current?.focus()}
-              returnKeyType="next"
-              onChangeText={setLicensePlate}
-            />
-
             <LicensePlateInput
               ref={licensePlateRef}
               label="Placa do veículo"
@@ -126,7 +103,7 @@ export const Departure = () => {
             />
           </Content>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </Container>
   );
 };

@@ -254,8 +254,18 @@ npx expo install react-native-screens react-native-safe-area-context
 yarn add @react-navigation/native-stack
 ```
 
+
+
 [Manipulação de datas - Dayjs](https://day.js.org/docs/en/installation/node-js)
 
 ```bash
 yarn add dayjs
+```
+
+
+
+[Scroll View - react-native-keyboard-aware-scroll-view](https://github.com/APSL/react-native-keyboard-aware-scroll-view)
+
+```bash
+
 ```
