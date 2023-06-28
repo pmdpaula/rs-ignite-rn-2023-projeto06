@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 
 import { useEffect, useState } from 'react';
 
@@ -7,6 +8,8 @@ import { Alert } from 'react-native';
 import { CarStatus } from '../../components/CarStatus';
 import { HistoricCard } from '../../components/HistoricCard';
 import { HomeHeader } from '../../components/HomeHeader';
+import { useQuery, useRealm } from '../../libs/realm';
+import { Historic } from '../../libs/realm/schemas/Historic';
 import { useQuery, useRealm } from '../../lib/realm';
 import { Historic } from '../../lib/realm/schemas/Historic';
 import { Container, Content } from './styles';
@@ -37,7 +40,7 @@ export const Home = () => {
   }
 
   function fetchHistoric() {
-    const response = historic.filtered("status = 'arrival' SORT(created_at DESC)");
+      const response = historic.filtered("status = 'arrival' SORT(created_at DESC)");
 
     console.log('🚀 ~ file: index.tsx:41 ~ fetchHistoric ~ response:', response);
   }
@@ -66,7 +69,7 @@ export const Home = () => {
           onPress={handleRegisterMovement}
         />
 
-        <HistoricCard
+            <HistoricCard
           data={{ created: '20/04', licensePlate: 'XXX1234', isSync: false }}
         />
       </Content>

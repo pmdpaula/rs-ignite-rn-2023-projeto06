@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@realm/react';
 import { Key } from 'phosphor-react-native';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Alert,
@@ -16,8 +16,8 @@ import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
 import { LicensePlateInput } from '../../components/LicensePlateInput';
 import { TextAreaInput } from '../../components/TextAreaInput';
-import { useRealm } from '../../lib/realm';
-import { Historic } from '../../lib/realm/schemas/Historic';
+import { useRealm } from '../../libs/realm';
+import { Historic } from '../../libs/realm/schemas/Historic';
 import { licensePlateValidade } from '../../utils/licensePlateValidat';
 import { Container, Content } from './styles';
 
@@ -85,6 +85,24 @@ export const Departure = () => {
       <KeyboardAvoidingView behavior={keyboardAvoidingViewBehaivor}>
         <ScrollView>
           <Content>
+            <LicensePlateInput
+              ref={licensePlateRef}
+              label="Placa do veículo"
+              placeholder="RJ14567"
+              onSubmitEditing={() => descriptionRef.current?.focus()}
+              returnKeyType="next"
+              onChangeText={setLicensePlate}
+            />
+
+            <LicensePlateInput
+              ref={licensePlateRef}
+              label="Placa do veículo"
+              placeholder="RJ14567"
+              onSubmitEditing={() => descriptionRef.current?.focus()}
+              returnKeyType="next"
+              onChangeText={setLicensePlate}
+            />
+
             <LicensePlateInput
               ref={licensePlateRef}
               label="Placa do veículo"

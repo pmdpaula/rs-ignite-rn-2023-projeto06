@@ -7,8 +7,8 @@ import { Alert } from 'react-native';
 import { Button } from '../../components/Button';
 import { ButtonIcon } from '../../components/ButtonIcon';
 import { Header } from '../../components/Header';
-import { useObject, useRealm } from '../../lib/realm';
-import { Historic } from '../../lib/realm/schemas/Historic';
+import { useObject, useRealm } from '../../libs/realm';
+import { Historic } from '../../libs/realm/schemas/Historic';
 import { Container, Content, Description, Footer, Label, LicensePlate } from './styles';
 
 type RouteParamsProps = {
@@ -24,6 +24,8 @@ export const Arrival = () => {
   const historic = useObject(Historic, new BSON.UUID(id));
   const realm = useRealm();
   const { goBack } = useNavigation();
+
+  const title = historic?.status === 'departure' ? 'Chegada' : 'Detalhes';
 
   function handleRemoveVehicleUsage() {
     Alert.alert('Cancelar', 'Cancelar a utilização do veículo?', [
@@ -67,7 +69,7 @@ export const Arrival = () => {
 
   return (
     <Container>
-      <Header title="Chegada" />
+      <Header title={title} />
 
       <Content>
         <Label>Placa do Veículo</Label>
@@ -79,17 +81,19 @@ export const Arrival = () => {
         <Description>{historic?.description}</Description>
       </Content>
 
-      <Footer>
-        <ButtonIcon
-          icon={X}
-          onPress={handleRemoveVehicleUsage}
-        />
+      {historic?.status === 'departure' && (
+        <Footer>
+          <ButtonIcon
+            icon={X}
+            onPress={handleRemoveVehicleUsage}
+          />
 
-        <Button
-          title="Registrar chegada"
-          onPress={handleArrivelRegister}
-        />
-      </Footer>
+          <Button
+            title="Registrar chegada"
+            onPress={handleArrivelRegister}
+          />
+        </Footer>
+      )}
     </Container>
   );
 };
