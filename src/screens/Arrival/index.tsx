@@ -32,7 +32,7 @@ export const Arrival = () => {
   const route = useRoute();
   const { id } = route.params as RouteParamsProps;
 
-  const historic = useObject(Historic, new BSON.UUID(id));
+  const historic = useObject(Historic, new BSON.UUID(id) as unknown as string);
   const realm = useRealm();
   const { goBack } = useNavigation();
 
