@@ -42,8 +42,8 @@ export const Departure = () => {
         descriptionRef.current?.focus();
 
         return Alert.alert(
-          'Finalizade inválida',
-          'A finalizade da utilização do veículo não pode ser vazia.',
+          'Finalidade inválida',
+          'A finalidade da utilização do veículo não pode ser vazia.',
         );
       }
 
@@ -83,7 +83,7 @@ export const Departure = () => {
             <LicensePlateInput
               ref={licensePlateRef}
               label="Placa do veículo"
-              placeholder="RJ14567"
+              placeholder="XXX9Z99"
               onSubmitEditing={() => descriptionRef.current?.focus()}
               returnKeyType="next"
               onChangeText={setLicensePlate}
@@ -91,7 +91,7 @@ export const Departure = () => {
 
             <TextAreaInput
               ref={descriptionRef}
-              label="Finalizade"
+              label="Finalidade"
               placeholder="Vou utilizar o veículo para..."
               onChangeText={setDescription}
             />
