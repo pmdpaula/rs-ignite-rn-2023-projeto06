@@ -269,3 +269,10 @@ yarn add dayjs
 ```bash
 
 ```
+
+
+[Verificação de conectividade](https://docs.expo.dev/versions/latest/sdk/netinfo/)
+
+```bash
+npx expo install @react-native-community/netinfo
+```
