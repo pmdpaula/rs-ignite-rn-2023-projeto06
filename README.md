@@ -276,3 +276,10 @@ yarn add dayjs
 ```bash
 npx expo install @react-native-community/netinfo
 ```
+
+
+[Armazenamento local - AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+
+```bash
+npx expo install @react-native-async-storage/async-storage
+```
