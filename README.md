@@ -283,3 +283,10 @@ npx expo install @react-native-community/netinfo
 ```bash
 npx expo install @react-native-async-storage/async-storage
 ```
+
+
+[Exibição de mensagens Toast - react-native-toast-message](https://github.com/calintamas/react-native-toast-message)
+
+```bash
+yarn add react-native-toast-message
+```

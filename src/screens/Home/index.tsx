@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@realm/react';
 import dayjs from 'dayjs';
+import { CloudArrowUp } from 'phosphor-react-native';
+import Toast from 'react-native-toast-message';
 
 import { useEffect, useState } from 'react';
 
@@ -9,18 +11,19 @@ import { Alert, FlatList } from 'react-native';
 import { CarStatus } from '../../components/CarStatus';
 import { HistoricCard, HistoricCardProps } from '../../components/HistoricCard';
 import { HomeHeader } from '../../components/HomeHeader';
+import { TopMessage } from '../../components/TopMessage';
 import {
-  getLastSyncTimestamp,
-  saveLastSyncTimestamp,
+  getLastAsyncTimestamp,
+  saveLastAsyncTimestamp,
 } from '../../libs/asyncStorage/syncStorage';
 import { useQuery, useRealm } from '../../libs/realm';
 import { Historic } from '../../libs/realm/schemas/Historic';
-import { LicensePlate } from './../../components/HistoricCard/styles';
 import { Container, Content, Label, Title } from './styles';
 
 export const Home = () => {
   const [vehiclesInUse, setVehiclesInUse] = useState<Historic | null>(null);
   const [vehicleHistoric, setVehicleHistoric] = useState<HistoricCardProps[]>([]);
+  const [percentageToSync, setPercentageToSync] = useState<string | null>(null);
 
   const { navigate } = useNavigation();
   const historic = useQuery(Historic);
@@ -48,7 +51,7 @@ export const Home = () => {
   async function fetchHistoric() {
     try {
       const response = historic.filtered("status = 'arrival' SORT(created_at DESC)");
-      const lastSync = await getLastSyncTimestamp();
+      const lastSync = await getLastAsyncTimestamp();
 
       const formattedHistoric = response.map((item) => {
         return {
@@ -74,11 +77,19 @@ export const Home = () => {
     const percentage = Math.round((transferred / transferrable) * 100);
 
     if (percentage === 100) {
-      await saveLastSyncTimestamp();
-      fetchHistoric();
+      await saveLastAsyncTimestamp();
+      await fetchHistoric();
+      setPercentageToSync(null);
+
+      Toast.show({
+        type: 'info',
+        text1: 'Todos os dados estão sincronizados',
+      });
     }
 
-    console.log('🚀 ~ file: index.tsx:70 ~ Transferido: ', percentage, '%');
+    if (percentage < 100) {
+      setPercentageToSync(`${percentage.toFixed(0)}% sincronizado.`);
+    }
   }
 
   useEffect(() => {
@@ -127,6 +138,12 @@ export const Home = () => {
 
   return (
     <Container>
+      {percentageToSync && (
+        <TopMessage
+          title={percentageToSync}
+          icon={CloudArrowUp}
+        />
+      )}
       <HomeHeader />
 
       <Content>
